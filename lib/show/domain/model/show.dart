@@ -5,6 +5,7 @@ class Show {
   num height;
   String url;
   String downloadUrl;
+  bool isFavourite;
 
   Show(
       {this.id,
@@ -12,7 +13,8 @@ class Show {
       this.width,
       this.height,
       this.url,
-      this.downloadUrl});
+      this.downloadUrl,
+      this.isFavourite});
 
   Show.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -21,6 +23,7 @@ class Show {
     height = json['height'];
     url = json['url'];
     downloadUrl = json['download_url'];
+    isFavourite = json['isFavourite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class Show {
     data['height'] = this.height;
     data['url'] = this.url;
     data['download_url'] = this.downloadUrl;
+    data['isFavourite'] = this.isFavourite;
     return data;
   }
 }

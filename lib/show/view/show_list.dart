@@ -32,12 +32,13 @@ class _ShowListState extends State<ShowList> {
       controller: scrollController,
       itemCount: widget?.shows?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
+        Show show = widget?.shows[index];
         return Card(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CachedNetworkImage(
-              imageUrl: widget?.shows[index].downloadUrl,
+              imageUrl: show?.downloadUrl ?? '',
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
@@ -47,7 +48,7 @@ class _ShowListState extends State<ShowList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${widget?.shows[index]?.author} $index',
+                    '${show?.author} $index',
                   ),
                   Text(
                     'RM $index',
@@ -59,10 +60,13 @@ class _ShowListState extends State<ShowList> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<ShowListViewModel>().toggleFavourite(show?.id);
+                  },
                   icon: Icon(
                     Icons.favorite,
-                    color: Colors.pink,
+                    color:
+                        show?.isFavourite == true ? Colors.pink : Colors.grey,
                     size: 24.0,
                   ),
                   label: Text('FAVOURITE'),

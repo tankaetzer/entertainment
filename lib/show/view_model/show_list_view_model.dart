@@ -27,6 +27,18 @@ class ShowListViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  toggleFavourite(String id) {
+    Show show =
+        shows.firstWhere((element) => element.id == id, orElse: () => null);
+
+    if (show.isFavourite == null || show.isFavourite == false) {
+      show.isFavourite = true;
+    } else {
+      show.isFavourite = false;
+    }
+    notifyListeners();
+  }
+
   purchaseItem(num amount, BuildContext context) {
     if (amount < 0.01) {
       showDialog<void>(
