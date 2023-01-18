@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entertainment/show/domain/model/show.dart';
+import 'package:entertainment/show/view_model/show_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class ShowList extends StatefulWidget {
   const ShowList({Key key, this.shows}) : super(key: key);
@@ -28,20 +30,75 @@ class _ShowListState extends State<ShowList> {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       controller: scrollController,
-            itemCount: widget?.shows?.length ?? 0,
-      cacheExtent: 99999,
+      itemCount: widget?.shows?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        return CachedNetworkImage(
-          imageUrl: widget?.shows[index].downloadUrl,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        );
+        return Card(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CachedNetworkImage(
+              imageUrl: widget?.shows[index].downloadUrl,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${widget?.shows[index]?.author} $index',
+                  ),
+                  Text(
+                    'RM $index',
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Colors.pink,
+                    size: 24.0,
+                  ),
+                  label: Text('FAVOURITE'),
+                ),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.share,
+                    color: Colors.blueAccent,
+                    size: 24.0,
+                  ),
+                  label: Text('SHARE'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    context
+                        .read<ShowListViewModel>()
+                        .purchaseItem(index, context);
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.green,
+                    size: 24.0,
+                  ),
+                  label: Text('PURCHASE'),
+                )
+              ],
+            )
+          ],
+        ));
       },
     );
   }
 
   scrollToBottom() {
     scrollController.animateTo(scrollController.position.maxScrollExtent,
-        duration: const Duration(seconds: 25), curve: Curves.fastOutSlowIn);
+        duration: const Duration(seconds: 100), curve: Curves.fastOutSlowIn);
   }
 }
