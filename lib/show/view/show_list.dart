@@ -32,6 +32,7 @@ class _ShowListState extends State<ShowList> {
       padding: const EdgeInsets.all(8),
       controller: scrollController,
       itemCount: widget?.shows?.length ?? 0,
+      cacheExtent: 99999,
       itemBuilder: (BuildContext context, int index) {
         Show show = widget?.shows[index];
         return Card(
