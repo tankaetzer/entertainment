@@ -27,6 +27,14 @@ class MyApp extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text('Show'),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                    child: Text(
+                        'RM ${context.watch<ShowListViewModel>().availableCredit}')),
+              )
+            ],
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
