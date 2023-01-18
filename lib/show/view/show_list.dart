@@ -4,6 +4,7 @@ import 'package:entertainment/show/view_model/show_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class ShowList extends StatefulWidget {
   const ShowList({Key key, this.shows}) : super(key: key);
@@ -72,7 +73,9 @@ class _ShowListState extends State<ShowList> {
                   label: Text('FAVOURITE'),
                 ),
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Share.share(show.downloadUrl);
+                  },
                   icon: Icon(
                     Icons.share,
                     color: Colors.blueAccent,

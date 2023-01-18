@@ -29,6 +29,9 @@ dependencies:
   # https://github.com/ymingt/flutter_easyloading
   flutter_easyloading: ^1.1.0
 
+  # https://pub.dev/packages/share
+  share: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
