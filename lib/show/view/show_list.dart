@@ -13,11 +13,23 @@ class ShowList extends StatefulWidget {
 }
 
 class _ShowListState extends State<ShowList> {
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToBottom();
+    });
     return ListView.builder(
       padding: const EdgeInsets.all(8),
-      itemCount: widget?.shows?.length ?? 0,
+      controller: scrollController,
+            itemCount: widget?.shows?.length ?? 0,
+      cacheExtent: 99999,
       itemBuilder: (BuildContext context, int index) {
         return CachedNetworkImage(
           imageUrl: widget?.shows[index].downloadUrl,
@@ -26,5 +38,10 @@ class _ShowListState extends State<ShowList> {
         );
       },
     );
+  }
+
+  scrollToBottom() {
+    scrollController.animateTo(scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 25), curve: Curves.fastOutSlowIn);
   }
 }
